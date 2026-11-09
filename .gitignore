@@ -1,0 +1,7 @@
+.DS_Store
+.Rapp.history
+__pycache__/
+00_data/01_pollen/pollen/
+01_morphospace/mesh/
+02_fabrication/engine/
+02_fabrication/relax/
