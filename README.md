@@ -1,17 +1,51 @@
 # Pollen Ornamentation Morphospace
 
+[![Preprint: bioRxiv](https://img.shields.io/badge/Preprint-bioRxiv-bd2736)](https://www.biorxiv.org/content/10.64898/2026.11.18.767721v1)
+[![Interactive introduction: Pollen Ornamentation Morphospace](https://img.shields.io/badge/Interactive%20introduction-Pollen%20Ornamentation%20Morphospace-c93016)](https://qianzhideng.com/research/01/en)
+
 English | [中文](README_zh.md)
 
-Analysis code for [the paper]([URL]). When using this repository, please cite:
+This repository contains the code to reproduce all analyses in Deng & Ishihara (2026).
 
-> Deng Q, Ishihara K. 2026. Pollen Ornamentation Morphospace: Interpretable Quantification by Persistent Homology. *bioRxiv*. doi: 10.1101/[DOI]
+For an illustrated walk-through of the method with interactive figures, see the [blog post on the author's website](https://qianzhideng.com/research/01/en).
+
+## Citation
+
+If you use this code, please cite:
+
+> Deng Q, Ishihara K. 2026. Pollen Ornamentation Morphospace: Interpretable Quantification by Persistent Homology. *bioRxiv*. doi: [10.64898/2026.11.18.767721](https://doi.org/10.64898/2026.11.18.767721)
+
+```bibtex
+@article{deng2026pollen,
+  title   = {Pollen Ornamentation Morphospace: Interpretable Quantification by Persistent Homology},
+  author  = {Deng, Qianzhi and Ishihara, Keisuke},
+  journal = {bioRxiv},
+  year    = {2026},
+  doi     = {10.64898/2026.11.18.767721}
+}
+```
 
 If you use the pollen meshes or the theoretical pollen, please also cite the original sources below; the other data sources are cited in the paper.
 
 - Pollen meshes (3D Pollen Library): Hayes AJ. 2017. Production of 3D printed scale models from microscope volume datasets for use in STEM education. *EMS Engineering Science Journal* 1: 002.
 - Theoretical pollen: Radja A, Horsley EM, Lavrentovich MO, Sweeney AM. 2019. Pollen cell wall patterns form from modulated phases. *Cell* 176: 856–868.
 
-## 1. Installation
+## 1. Structure
+
+```
+pipeline.py               ρ field → signed persistence → morphospace coordinates (I, D, P)
+00_data/                  data preparation
+├── 01_pollen/            pollen meshes (3D Pollen Library)
+├── 02_pollination/       pollination modes (EcoFlora)
+├── 03_names/             accepted names (WCVP)
+└── 04_tree/              phylogenetic tree (GBOTB)
+01_morphospace/           real pollen: sphericity, coordinates (I, D, P)
+02_fabrication/           theoretical pollen: Radja model, coordinates, wavenumber and spine prediction
+03_function/              pollination mode: species table, insect vs wind comparison
+04_phylogeny/             Asteraceae: phylogenetic signal, ancestral states
+```
+
+## 2. Installation
 
 Python and R are installed in a single conda environment, `morphospace`:
 
@@ -26,7 +60,7 @@ Rscript -e 'options(repos = "https://cloud.r-project.org"); remotes::install_git
 
 The theoretical pollen additionally requires a system C++ compiler (`g++`) and `make`.
 
-## 2. Data
+## 3. Data
 
 The model program of Radja et al. (2019) and its dependencies must be prepared by hand; run the following from the folder containing `README.md`:
 
@@ -37,21 +71,6 @@ cp -R /tmp/radja/PhaseDiagramCalculations/GradientDescent_1l /tmp/radja/PhaseDia
 curl -L https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz | tar xz -C 02_fabrication/engine
 curl -L https://fy.chalmers.se/subatom/wigxjpf/wigxjpf-1.13.tar.gz | tar xz -C 02_fabrication/engine
 make -C 02_fabrication/engine/wigxjpf-1.13
-```
-
-## 3. Structure
-
-```
-pipeline.py               ρ field → signed persistence → morphospace coordinates (I, D, P)
-00_data/                  data preparation
-├── 01_pollen/            pollen meshes (3D Pollen Library)
-├── 02_pollination/       pollination modes (EcoFlora)
-├── 03_names/             accepted names (WCVP)
-└── 04_tree/              phylogenetic tree (GBOTB)
-01_morphospace/           real pollen: sphericity, coordinates (I, D, P)
-02_fabrication/           theoretical pollen: Radja model, coordinates, wavenumber and spine prediction
-03_function/              pollination mode: species table, insect vs wind comparison
-04_phylogeny/             Asteraceae: phylogenetic signal, ancestral states
 ```
 
 ## 4. Running

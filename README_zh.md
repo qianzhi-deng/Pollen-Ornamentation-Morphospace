@@ -1,17 +1,51 @@
 # 花粉纹饰形态空间
 
+[![预印本: bioRxiv](https://img.shields.io/badge/%E9%A2%84%E5%8D%B0%E6%9C%AC-bioRxiv-bd2736)](https://www.biorxiv.org/content/10.64898/2026.11.18.767721v1)
+[![交互式介绍: 花粉纹饰形态空间](https://img.shields.io/badge/%E4%BA%A4%E4%BA%92%E5%BC%8F%E4%BB%8B%E7%BB%8D-%E8%8A%B1%E7%B2%89%E7%BA%B9%E9%A5%B0%E5%BD%A2%E6%80%81%E7%A9%BA%E9%97%B4-c93016)](https://qianzhideng.com/research/01/zh)
+
 [English](README.md) | 中文
 
-本仓库为[论文]([URL])的分析代码，使用时请引用：
+本仓库包含复现 Deng & Ishihara (2026) 全部分析的代码。
 
-> Deng Q, Ishihara K. 2026. Pollen Ornamentation Morphospace: Interpretable Quantification by Persistent Homology. *bioRxiv*. doi: 10.1101/[DOI]
+关于该方法的图解步骤和交互示例，请参阅作者个人网站上的[博客文章](https://qianzhideng.com/research/01/zh)。
+
+## 引用
+
+使用本仓库的代码时，请引用：
+
+> Deng Q, Ishihara K. 2026. Pollen Ornamentation Morphospace: Interpretable Quantification by Persistent Homology. *bioRxiv*. doi: [10.64898/2026.11.18.767721](https://doi.org/10.64898/2026.11.18.767721)
+
+```bibtex
+@article{deng2026pollen,
+  title   = {Pollen Ornamentation Morphospace: Interpretable Quantification by Persistent Homology},
+  author  = {Deng, Qianzhi and Ishihara, Keisuke},
+  journal = {bioRxiv},
+  year    = {2026},
+  doi     = {10.64898/2026.11.18.767721}
+}
+```
 
 如使用花粉网格或理论花粉，请同时引用以下原始来源；其他数据来源见论文。
 
 - 花粉网格（3D Pollen Library）：Hayes AJ. 2017. Production of 3D printed scale models from microscope volume datasets for use in STEM education. *EMS Engineering Science Journal* 1: 002.
 - 理论花粉：Radja A, Horsley EM, Lavrentovich MO, Sweeney AM. 2019. Pollen cell wall patterns form from modulated phases. *Cell* 176: 856–868.
 
-## 1. 安装
+## 1. 结构
+
+```
+pipeline.py               ρ 场 → 带符号持续度 → 形态空间坐标 (I, D, P)
+00_data/                  数据准备
+├── 01_pollen/            花粉网格（3D Pollen Library）
+├── 02_pollination/       传粉方式（EcoFlora）
+├── 03_names/             接受名（WCVP）
+└── 04_tree/              系统发育树（GBOTB）
+01_morphospace/           真实花粉：球度、坐标（I、D、P）
+02_fabrication/           理论花粉：Radja 模型、坐标、波数与刺数预测
+03_function/              传粉方式：物种表、虫媒与风媒比较
+04_phylogeny/             菊科：系统发育信号、祖先状态
+```
+
+## 2. 安装
 
 Python 和 R 装在同一个 conda 环境 `morphospace` 中：
 
@@ -26,7 +60,7 @@ Rscript -e 'options(repos = "https://cloud.r-project.org"); remotes::install_git
 
 理论花粉另需系统的 C++ 编译器（`g++`）和 `make`。
 
-## 2. 数据
+## 3. 数据
 
 Radja et al. (2019) 的模型程序及其依赖需手动准备，在 `README.md` 所在的文件夹下运行：
 
@@ -37,21 +71,6 @@ cp -R /tmp/radja/PhaseDiagramCalculations/GradientDescent_1l /tmp/radja/PhaseDia
 curl -L https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz | tar xz -C 02_fabrication/engine
 curl -L https://fy.chalmers.se/subatom/wigxjpf/wigxjpf-1.13.tar.gz | tar xz -C 02_fabrication/engine
 make -C 02_fabrication/engine/wigxjpf-1.13
-```
-
-## 3. 结构
-
-```
-pipeline.py               ρ 场 → 带符号持续度 → 形态空间坐标 (I, D, P)
-00_data/                  数据准备
-├── 01_pollen/            花粉网格（3D Pollen Library）
-├── 02_pollination/       传粉方式（EcoFlora）
-├── 03_names/             接受名（WCVP）
-└── 04_tree/              系统发育树（GBOTB）
-01_morphospace/           真实花粉：球度、坐标（I、D、P）
-02_fabrication/           理论花粉：Radja 模型、坐标、波数与刺数预测
-03_function/              传粉方式：物种表、虫媒与风媒比较
-04_phylogeny/             菊科：系统发育信号、祖先状态
 ```
 
 ## 4. 运行
